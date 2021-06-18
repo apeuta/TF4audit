@@ -120,8 +120,7 @@ resource "azurerm_virtual_machine" "windows" {
 data "azurerm_public_ip" "test" {
   name = "${azurerm_public_ip.dataip.name}"
   resource_group_name = var.resourceGroupName
-  depends_on = ["azurerm_virtual_machine.windows"
-  ]
+  depends_on = [azurerm_virtual_machine.windows]
 }
 output "public_ip_address" {
   value = "${data.azurerm_public_ip.test.ip_address}"
