@@ -1,3 +1,10 @@
+provider "azurerm" {
+  version         = "2.4.0"
+  subscription_id = var.subscriptionID
+
+  features {}
+}
+
 #Create a Resource Group
 resource "azurerm_resource_group" "auditRG" {
   name                = var.resource_group_name
