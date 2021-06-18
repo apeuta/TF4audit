@@ -102,8 +102,8 @@ resource "azurerm_virtual_machine" "windows" {
 
   os_profile {
     computer_name = "APserver2019"
-    admin_username = vm_admin
-    admin_password = vm_pass
+    admin_username = var.vm_admin
+    admin_password = var.vm_pass
   }
 
   os_profile_windows_config {
