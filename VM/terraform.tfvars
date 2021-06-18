@@ -1,4 +1,4 @@
-subscriptionID = "d4dc12d2-bba4-41e8-a5fc-ab93dee6d310"
+subscriptionID = "52786f9b-ef27-4af0-9bfd-1cb55e828c18"
 resourceGroupName = "WIN-AUDIT"
 location = "southeastasia"
 securityGroup = "auditSG"
