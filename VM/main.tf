@@ -7,7 +7,7 @@ provider "azurerm" {
 
 #Create a Resource Group
 resource "azurerm_resource_group" "auditRG" {
-  name                = var.resource_group_name
+  name                = var.resourceGroupName
   location            = var.location
 }
 
@@ -15,7 +15,7 @@ resource "azurerm_resource_group" "auditRG" {
 resource "azurerm_network_security_group" "auditSG" {
   name                = var.securityGroup
   location            = var.location
-  resource_group_name = var.resource_group_name
+  resource_group_name = var.resourceGroupName
 }
 
 #Create Rule to Allow RDP Inbound
@@ -29,7 +29,7 @@ resource "azurerm_network_security_rule" "rdp" {
   destination_port_range      = "3389"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = var.resource_group_name
+  resource_group_name         = var.resourceGroupName
   network_security_group_name = var.securityGroup
 }
 
@@ -38,13 +38,13 @@ resource "azurerm_virtual_network" "auditVN" {
   name                  = var.virtualNetwork
   address_space         = ["10.0.0.0/16"]
   location              = var.location
-  resource_group_name   = var.resource_group_name
+  resource_group_name   = var.resourceGroupName
 }
 
 #Create Subnets
 resource "azurerm_subnet" "subnet-1" {
   name                  = "audit-subnet-1"
-  resource_group_name   = var.resource_group_name
+  resource_group_name   = var.resourceGroupName
   virtual_network_name  = var.virtualNetwork
   address_prefix        = "10.0.1.0/24"
 }
@@ -59,7 +59,7 @@ resource "azurerm_subnet_network_security_group_association" "test" {
 resource "azurerm_public_ip" "dataip" {
   name                          = "testPublicIP"
   location                      = var.location
-  resource_group_name           = var.resource_group_name
+  resource_group_name           = var.resourceGroupName
   public_ip_address_allocation  = "dynamic"
 }
 
@@ -67,7 +67,7 @@ resource "azurerm_public_ip" "dataip" {
 resource "azurerm_network_interface" "vm_interface" {
   name                  = "vm_NIC"
   location              = var.location
-  resource_group_name   = var.resource_group_name
+  resource_group_name   = var.resourceGroupName
   ip_configuration {
     name                            = "Server2019"
     subnet_id                       = "${azurerm_subnet.subnet-1.id}"
@@ -80,7 +80,7 @@ resource "azurerm_network_interface" "vm_interface" {
 resource "azurerm_virtual_machine" "windows" {
   name                              = "APWindows"
   location                          = var.location
-  resource_group_name               = var.resource_group_name
+  resource_group_name               = var.resourceGroupName
   network_interface_ids             = ["${azurerm_network_interface.vm_interface.id}"]
   vm_size                           = "Standard_DS1_v2"
   delete_os_disk_on_termination     = "true"
@@ -119,7 +119,7 @@ resource "azurerm_virtual_machine" "windows" {
 #Retrieve Public IP
 data "azurerm_public_ip" "test" {
   name = "${azurerm_public_ip.dataip.name}"
-  resource_group_name = var.resource_group_name
+  resource_group_name = var.resourceGroupName
   depends_on = ["azurerm_virtual_machine.windows"
   ]
 }
