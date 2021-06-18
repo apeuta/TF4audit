@@ -60,7 +60,7 @@ resource "azurerm_public_ip" "dataip" {
   name                          = "testPublicIP"
   location                      = var.location
   resource_group_name           = var.resourceGroupName
-  allocation_method             = "dynamic"
+  allocation_method             = "Dynamic"
 }
 
 #Create Network Interface
