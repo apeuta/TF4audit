@@ -1,5 +1,4 @@
 provider "azurerm" {
-  version         = "2.4.0"
   subscription_id = var.subscriptionID
 
   features {}
